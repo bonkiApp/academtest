@@ -12,6 +12,6 @@ public class AcademTest2 {
             sum+=i;
             j++;
         }
-        System.out.println(sum/j);
+        System.out.println("Cреднее арифметическое четных чисел от 10 до 100: " + sum/j);
     }
 }
