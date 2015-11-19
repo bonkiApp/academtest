@@ -16,23 +16,22 @@ import java.util.Scanner;
 
 public class AcademTest4 {
     public static void main(String[] args) {
-        int[] ar ={23,15,1,3,18,28,4,12,36,29,10,11,27,33,30,7,21,26}; // номера работавших касс в хаотичном порядке
+        int[] ar = {23, 15, 1, 3, 18, 28, 4, 12, 36, 29, 10, 11, 27, 33, 30, 7, 21, 26}; // номера работавших касс в хаотичном порядке
         Arrays.sort(ar);
 
-        System.out.println("Хьюстон, у меня проблема! Сообщите номер сломавшейся кассы!");
+        System.out.println("Хьюстон, у меня проблема! Сообщите номер сломавшейся кассы, а то я забыл...");
 
         Scanner in = new Scanner(System.in);
         try {
             long kassa = in.nextLong();
-            if (kassa>36 || kassa<0) {
+            if (kassa > 36 || kassa <= 0) {
                 System.out.println("Сообщите правильный номер, он должен быть от 1 до 36!");
                 return;
             }
 
 
-
-            String arString = Arrays.toString(ar); // можно будет удалить
-            System.out.println(arString); // можно будет удалить
+//            String arString = Arrays.toString(ar); // можно будет удалить
+//            System.out.println(arString); // можно будет удалить
 
             int arLength = ar.length;
 //            System.out.println(arLength);
@@ -49,36 +48,48 @@ public class AcademTest4 {
 //                } System.out.println("Касса №"+kassa+" найдена! Это " + num +" очередь слева. Спасибо! :)");
 //
 //            }
-            if (kassa==ar[0]) {
-                System.out.println("Касса №"+kassa+" найдена! Это первая очередь слева. Спасибо! :)");
+            if (kassa == ar[0]) {
+                System.out.println("Касса №" + kassa + " найдена! Это первая очередь слева. Спасибо! :)");
                 return;
             }
-            if (kassa==ar[ar.length-1]) {
-                System.out.println("Касса №"+kassa+" найдена! Это последняя очередь слева. Спасибо! :)");
+            if (kassa == ar[ar.length - 1]) {
+                System.out.println("Касса №" + kassa + " найдена! Это последняя очередь слева. Спасибо! :)");
                 return;
             }
 
 //            System.out.println("Касса №"+kassa+" найдена!");
-            System.out.println("Касса №"+kassa+" найдена! Это " + kasSearch(kassa, ar)+" очередь слева. Спасибо! :)");
-
+            if (kasSearch(kassa, ar)>0) {
+                System.out.println("Касса №" + kassa + " найдена! Это " + kasSearch(kassa, ar) + " очередь слева. Спасибо! :)");
+            } else {
+                System.out.println("Это не та касса, тут нет очереди, а значит эта касса и не работала. Сообщите другой номер.");
+            }
         } catch (java.util.InputMismatchException e) {
             System.out.println("Что за шутки? Я знаю что номер кассы болжен быть двузначным целым числом от 1 до 36! Повторите номер кассы!");
-        } return;}
-
-            public static long kasSearch(long kassa, int[] ar) {
-            return kasSearch(kassa, ar, 0, ar.length-1);
         }
+        return;
+    }
+
+    public static int kasSearch(long kassa, int[] ar) {
+        return kasSearch(kassa, ar, 0, ar.length - 1);
+    }
 
 
-            private static int kasSearch(long kassa, int[] ar, int first, int last) {
+    private static int kasSearch(long kassa, int[] ar, int first, int last) {
+        try {
             int middle = first + (last - first) / 2;
             if (kassa > ar[middle]) {
-                return kasSearch(kassa, ar, middle-1, last);
-            } else if (kassa<ar[middle]) {
-                return kasSearch(kassa, ar, first, middle+1 );
+                return kasSearch(kassa, ar, middle, last);
+            } else if (kassa < ar[middle]) {
+                return kasSearch(kassa, ar, first, middle);
             } else {
-                return middle+1;
+                return middle + 1;
             }
+        } catch (java.lang.StackOverflowError e) {
+//            System.out.println("Это не та касса, тут нет очереди, а значит эта касса и не работала. Сообщите другой номер.");
+            return -1;
         }
     }
+}
+
+
 
